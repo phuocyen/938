@@ -12,12 +12,19 @@ pipeline {
         stage('Build stage') {
             steps {
                 withDockerRegistry(credentialsId: '12', url: 'https://index.docker.io/v1/') {
-                sh 'docker build -t  pynwi/938lan1 .'
-                sh 'docker push pynwi/938lan1'
-
-                           }
+                    sh 'docker build -t pynwi/938lan1 .'
+                    sh 'docker push pynwi/938lan1'
+                }
             }
         }
+    }
 
-
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
 }
